@@ -1,4 +1,4 @@
-package com.cao.terminal_marittimo.Entities;
+package com.cao.terminal_marittimo.Models;
 
 public class Utente {
     private int id;

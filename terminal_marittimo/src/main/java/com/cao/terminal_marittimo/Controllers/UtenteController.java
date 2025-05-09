@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cao.terminal_marittimo.Dao.UtenteDao;
-import com.cao.terminal_marittimo.Entities.Utente;
+import com.cao.terminal_marittimo.Models.Utente;
 
 import java.util.List;
 
@@ -18,8 +18,12 @@ public class UtenteController {
 
     //creo un oggetto che mi permette di comunicare con il DB 
     private final UtenteDao dao = new UtenteDao();
-
-    @GetMapping("/inserisci")
+    @GetMapping("/login")
+    public String login(@RequestParam String nome, @RequestParam String password) {
+        dao.login(nome, password);
+        return "OK";
+    }
+    /* @GetMapping("/inserisci")
     public String inserisci(@RequestParam String nome, @RequestParam String email) {
         dao.inserisci(nome, email);
         return "OK";
@@ -43,5 +47,5 @@ public class UtenteController {
     public String elimina(@RequestParam int id) {
         dao.elimina(id);
         return "OK";
-    }
+    } */
 }

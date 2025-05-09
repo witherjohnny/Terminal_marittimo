@@ -5,10 +5,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cao.terminal_marittimo.DbConnection;
-import com.cao.terminal_marittimo.Entities.Utente;
+import com.cao.terminal_marittimo.Models.Utente;
 
 public class UtenteDao {
 
+    public boolean login(String username , String password){
+        try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
+            String sql = "SELECT * FROM utenti WHERE username = ? AND password = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true; // Login successful
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean registra(String username , String password){
+        try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
+            String sql = "INSERT INTO utenti (username, password) VALUES (?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0; // Registration successful if at least one row is inserted
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     public void inserisci(String nome, String email) {
         try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
             String sql = "INSERT INTO utenti (nome, email) VALUES (?, ?)";
