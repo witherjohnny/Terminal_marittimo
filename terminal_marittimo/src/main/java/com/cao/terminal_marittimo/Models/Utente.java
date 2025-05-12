@@ -3,12 +3,13 @@ package com.cao.terminal_marittimo.Models;
 public class Utente {
     private int id;
     private String nome;
-    private String email;
+    private String ruolo;
+    
 
-    public Utente(int id, String nome, String email) {
+    public Utente(int id, String nome, String ruolo) {
         this.id = id;
         this.nome = nome;
-        this.email = email;
+        this.ruolo = ruolo;
     }
 
     //Obbligatori per il corretto funzionamento del DAO e del serializzatore
@@ -19,8 +20,7 @@ public class Utente {
     public  String  getNome() {
         return  nome;
     }
-
-    public  String  getEmail() {
-        return  email;
+    public  String  getRuolo() {
+        return  ruolo;
     }
 }

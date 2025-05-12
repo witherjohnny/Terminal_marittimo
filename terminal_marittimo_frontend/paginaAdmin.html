@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+</head>
+<body>
+    <!--registra lo scarico della merce (polizza, nave ,viaggio....)-->
+    <form onsubmit="registraPolizza(event)">
+    <h3>Viaggio</h3>
+    <label for="viaggio">Viaggio:</label>
+    
+    <label for="nave">Nave:</label>
+    <input type="text" id="nave" name="nave" required>
+    
+    <label for="data_partenza">Data Partenza:</label>
+    <input type="date" id="data_partenza" name="data_partenza" required>
+    
+    <label for="data_allibramento">Data Allibramento:</label>
+    <input type="date" id="data_allibramento" name="data_allibramento" required>
+    
+    <h3>Fornitore</h3>
+    <label for="fornitore">Fornitore:</label>
+    <input type="text" id="fornitore" name="fornitore" required>
+    
+    <h3>Peso</h3>
+    <label for="peso">Peso:</label>
+    <input type="number" id="peso" name="peso" step="0.01" required>
+    
+    <h3>Merce</h3>
+    <label for="merce">Merce:</label>
+    <input type="text" id="merce" name="merce" required>
+    
+    <label for="durata_franchigia">Durata Franchigia (giorni):</label>
+    <input type="number" id="durata_franchigia" name="durata_franchigia" required>
+    
+    <label for="costo_franchigia">Costo Franchigia:</label>
+    <input type="number" id="costo_franchigia" name="costo_franchigia" step="0.01" required>
+    
+    <button type="submit">Registra</button>
+    </form>
+</body>
+</html>
