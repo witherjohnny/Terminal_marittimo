@@ -1,37 +1,30 @@
 package com.cao.terminal_marittimo.Dao;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.sql.Connection;
-
 import com.cao.terminal_marittimo.DbConnection;
-import com.cao.terminal_marittimo.Models.Nave;
+import com.cao.terminal_marittimo.Models.Merce;
 
-public class NaveDao {
-    
-
-    
-    public List<Nave> getTutteLeNavi() {
+public class MerceDao {
+     public List<Merce> getAllMerce() {
         try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
-            List<Nave> navi = new ArrayList<>();
-            String sql = "SELECT * FROM nave";
+            List<Merce> merceList = new ArrayList<>();
+            String sql = "SELECT * FROM merce";
             
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Nave nave = new Nave(rs.getInt("id"), rs.getString("nome"));
-                navi.add(nave);
+                Merce merce = new Merce(rs.getInt("id"), rs.getString("tipologia_merce"));
+                merceList.add(merce);
             }
-            
-            return navi;
-            
-    
+            return merceList;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

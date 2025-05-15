@@ -10,7 +10,7 @@ import io.jsonwebtoken.security.Keys;
 
 public class UsersKeySingleton {
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private static UsersKeySingleton instance;
+    private static UsersKeySingleton instance = null;
     private ArrayList<String> clienteKeys;
     private ArrayList<String> fornitoreKeys;
     private ArrayList<String> autistaKeys;
@@ -27,7 +27,8 @@ public class UsersKeySingleton {
         return Jwts.builder()
                 .setSubject(nome) // Imposta il nome dell'utente come soggetto
                 .setIssuedAt(new Date()) // Data di emissione
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // Scadenza (1 ora)
+                 // Scadenza (24 ore)
+                 .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .signWith(SECRET_KEY) // Firma il token con la chiave segreta
                 .compact();
     }

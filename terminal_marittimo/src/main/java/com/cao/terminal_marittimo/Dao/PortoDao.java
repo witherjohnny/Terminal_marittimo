@@ -35,6 +35,6 @@ public class PortoDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return List.of();
     }
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <script src="../js/authenticate.js"></script>
+    <script src="../js/admin.js"></script>
+</head>
+<body onload="Load(); auth()">
+    <!--registra la partenza di una nave-->
+    <h1>Registra partenza viaggio</h1>
+    <form onsubmit="registraPartenzaViaggio(event)">
+        <h3>Partenza Viaggio</h3>
+        <label for="nave">Nave:</label>
+        <select name="nave" id="nave"></select>
+
+        <label for="data_partenza">Data Partenza:</label>
+        <input type="date" id="data_partenza" name="data_partenza" required>
+        
+        <label for="porto">Porto di partenza:</label>
+        <select name="porto" id="porto"></select>
+        <button type="submit">Registra</button>
+    </form>
+    <a href="../index.html"><button>Torna home</button></a>
+
+    <h1>Registra arrivo viaggio</h1>
+    <form onsubmit="registraArrivoViaggio(event)">
+        <label for="viaggio">Viaggio:</label>
+        <select name="viaggio" id="viaggio"></select>
+
+        <label for="data_arrivo">Data Arrivo:</label>
+        <input type="date" id="data_arrivo" name="data_arrivo" required>
+
+        <label for="porto">Porto di arrivo:</label>
+        <select name="porto" id="porto2"></select>
+        <button type="submit">Registra</button>
+    </form>
+</body>
+</html>

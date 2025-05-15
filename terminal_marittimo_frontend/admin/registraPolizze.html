@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/authenticate.js"></script>
+    <script src="../js/admin.js"></script>
+</head>
+<body onload="LoadRegistraPolizze(); auth()">
+    <!--registra le polizze del viaggio-->
+    <h1>Registra polizze</h1>
+    <form onsubmit="registraPolizza(event)">
+
+        <h3>Fornitore</h3>
+        <label for="fornitore">Nome:</label>
+        <select name="fornitore" id="fornitore"></select>
+
+        <h3>Altri Dati</h3>
+        <label for="peso">Peso:</label>
+        <input type="number" id="peso" name="peso" step="0.01" required><br>
+        
+        <label for="merce">Merce:</label>
+        <select name="merce" id="merce"></select><br>
+        
+        <label for="durata_franchigia">Durata Franchigia (giorni):</label>
+        <input type="number" id="durata_franchigia" name="durata_franchigia" required><br>
+        
+        <label for="costo_franchigia">Costo Franchigia:</label>
+        <input type="number" id="costo_franchigia" name="costo_franchigia" step="0.01" required><br>    
+        
+        <button type="submit">Registra</button>
+    </form>
+    <a href="../index.html"><button>Torna home</button></a>
+</body>
+</html>

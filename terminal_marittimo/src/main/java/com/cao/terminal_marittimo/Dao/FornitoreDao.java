@@ -21,7 +21,7 @@ public class FornitoreDao {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Fornitore fornitore = new Fornitore(rs.getInt("id"), rs.getString("nome"),rs.getString("cognome"));
+                Fornitore fornitore = new Fornitore(rs.getInt("id"), rs.getString("nome"));
                 fornitori.add(fornitore);
             }
             
@@ -31,6 +31,6 @@ public class FornitoreDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return List.of();
     }
 }
