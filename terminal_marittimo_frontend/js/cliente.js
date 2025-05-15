@@ -36,7 +36,7 @@ function richiediBuono(event){
         alert('Inserisci un peso valido.');
         return;
     }
-    fetch(`http://localhost:8080/admin/richiediBuono?token=${encodeURIComponent(localStorage.getItem('authToken'))}&polizza=${encodeURIComponent(polizza)}&peso=${encodeURIComponent(peso)}`, {
+    fetch(`http://localhost:8080/cliente/richiediBuono?token=${encodeURIComponent(localStorage.getItem('authToken'))}&polizza=${encodeURIComponent(polizza)}&peso=${encodeURIComponent(peso)}`, {
         method: 'GET',
     }).then(response => {
         if (!response.ok) {

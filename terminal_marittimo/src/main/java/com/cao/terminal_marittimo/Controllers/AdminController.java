@@ -2,21 +2,21 @@ package com.cao.terminal_marittimo.Controllers;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cao.terminal_marittimo.UsersKeySingleton;
+import com.cao.terminal_marittimo.Dao.BuonoDao;
 import com.cao.terminal_marittimo.Dao.FornitoreDao;
 import com.cao.terminal_marittimo.Dao.MerceDao;
 import com.cao.terminal_marittimo.Dao.NaveDao;
 import com.cao.terminal_marittimo.Dao.PolizzaDao;
 import com.cao.terminal_marittimo.Dao.PortoDao;
 import com.cao.terminal_marittimo.Dao.ViaggioDao;
+import com.cao.terminal_marittimo.Models.Buono_consegna;
 import com.cao.terminal_marittimo.Models.Fornitore;
 import com.cao.terminal_marittimo.Models.Merce;
 import com.cao.terminal_marittimo.Models.Nave;
@@ -37,6 +37,7 @@ public class AdminController {
     private final ViaggioDao daoViaggio = new ViaggioDao();
     private final MerceDao daoMerce = new MerceDao();
     private final PolizzaDao daoPolizza = new PolizzaDao();
+    private final BuonoDao daoBuono = new BuonoDao();
      //http://localhost:8080/admin/getAllNavi
     @GetMapping("/getAllNavi")
     public List<Nave> getAllNavi(@RequestParam(name = "token" ,required=true) String token) {
@@ -127,5 +128,33 @@ public class AdminController {
             return ResponseEntity.status(500).body(Map.of("error", "Errore durante la registrazione della polizza"));
         }
     }
+    @GetMapping("/getAllNotApprovedBuoni")
+    public List<Buono_consegna> getAllNotApprovedBuoni(@RequestParam(name = "token", required = true) String token){
+        if (UsersKeySingleton.getInstance().checkAuthorization(token).equals("admin") == false) {
+            return List.of();
+        }
+        return daoBuono.getAllNotApprovedBuoni();
+    }
+    @GetMapping("/approvaBuono")
+    public ResponseEntity<Map<String, String>> approvaBuono(@RequestParam(name = "token", required = true) String token,
+                                            @RequestParam(name = "approva", required = true) boolean approva,
+                                            @RequestParam(name = "id", required = true) int id){
+        if (UsersKeySingleton.getInstance().checkAuthorization(token).equals("admin") == false) {
+            return ResponseEntity.status(403).body(Map.of("error", "Unauthorized"));
+        }
 
+        if (approva) {
+            boolean success = daoBuono.approvaBuono(id);
+            if(success){
+                return ResponseEntity.ok(Map.of("message","buono approvato"));
+            }
+            
+        } else {
+            boolean success = daoBuono.deleteBuono(id);
+            if(success){
+                return ResponseEntity.ok(Map.of("message","buono cancellato"));
+            }
+        }
+        return ResponseEntity.status(500).body(Map.of("error", "Errore durante l'operazione sul buono"));
+    }
 }

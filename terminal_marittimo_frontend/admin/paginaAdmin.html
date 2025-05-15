@@ -6,8 +6,11 @@
     <title>Admin</title>
     <script src="../js/authenticate.js"></script>
     <script src="../js/admin.js"></script>
+    <script src="../js/adminBuoni.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script src="../js/bootstrap.js"></script>
 </head>
-<body onload="Load(); auth()">
+<body onload="Load(); auth();loadBuoniDaApprovare()">
     <!--registra la partenza di una nave-->
     <h1>Registra partenza viaggio</h1>
     <form onsubmit="registraPartenzaViaggio(event)">
@@ -36,5 +39,12 @@
         <select name="porto" id="porto2"></select>
         <button type="submit">Registra</button>
     </form>
+    
+    <h1>Approva buoni consegna</h1>
+    <div onload="loadBuoniDaApprovare()" id="buoni-container">
+        
+    </div>
+        
+
 </body>
 </html>

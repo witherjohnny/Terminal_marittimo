@@ -6,7 +6,8 @@ public class Cliente {
     private String cognome;
     private Utente utente;
 
-    public Cliente(int id, String nome, String cognome) {
+    public Cliente(int id, String nome, String cognome, Utente utente) {
+        this.utente = utente;
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;

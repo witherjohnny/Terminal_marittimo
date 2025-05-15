@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.cao.terminal_marittimo.DbConnection;
 import com.cao.terminal_marittimo.Models.Fornitore;
-import com.cao.terminal_marittimo.Models.Nave;
 
 public class FornitoreDao {
      public List<Fornitore> getAllFornitori() {

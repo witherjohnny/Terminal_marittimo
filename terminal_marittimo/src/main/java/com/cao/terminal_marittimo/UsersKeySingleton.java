@@ -23,9 +23,9 @@ public class UsersKeySingleton {
         autistaKeys = new ArrayList<String>();
         adminKeys = new ArrayList<String>();
     }
-    public static String makeKey(String nome){
+    public static String makeKey(int id){
         return Jwts.builder()
-                .setSubject(nome) // Imposta il nome dell'utente come soggetto
+                .setSubject(String.valueOf(id)) 
                 .setIssuedAt(new Date()) // Data di emissione
                  // Scadenza (24 ore)
                  .setExpiration(new Date(System.currentTimeMillis() + 86400000))
@@ -76,6 +76,19 @@ public class UsersKeySingleton {
             return "admin";
         }
         return null;
+    }
+    public static int getUserIdFromToken(String token) {
+        try {
+            String subject = Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+            return Integer.parseInt(subject);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
 }

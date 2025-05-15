@@ -46,4 +46,19 @@ public class UtenteDao {
             e.printStackTrace();
         }
     }
+    public int getClienteId(int id) {
+        try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
+            String sql = "SELECT c.id FROM utenti AS u JOIN cliente AS c ON u.id = c.id_utente WHERE u.ruolo = 'cliente' AND c.id_utente = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return -1;
+    }
 }

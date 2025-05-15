@@ -1,8 +1,5 @@
 package com.cao.terminal_marittimo.Controllers;
-import java.util.Date;
 import java.util.Map;
-import java.security.Key;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cao.terminal_marittimo.UsersKeySingleton;
 import com.cao.terminal_marittimo.Dao.UtenteDao;
 import com.cao.terminal_marittimo.Models.Utente;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
 
 @RestController
@@ -34,7 +27,7 @@ public class UtenteController {
         if(utente == null) {
             return ResponseEntity.status(401).body(Map.of("error", "Credenziali non valide"));
         }
-        String token = UsersKeySingleton.makeKey(nome);
+        String token = UsersKeySingleton.makeKey(utente.getId());
         Map<String, String> response = Map.of(
             "utente", utente.getNome(),
             "token", token
