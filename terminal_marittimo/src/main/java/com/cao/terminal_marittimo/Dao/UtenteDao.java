@@ -35,6 +35,25 @@ public class UtenteDao {
         }
         return false;
     }
+    public int registra(String username , String password, String ruolo){
+        try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
+            String sql = "INSERT INTO utenti (username, password,ruolo) VALUES (?, ?,'"+ruolo+"')";
+            PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
+            return -1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 
     public void elimina(int id) {
         try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {

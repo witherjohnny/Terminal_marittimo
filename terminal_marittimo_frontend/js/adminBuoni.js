@@ -33,8 +33,8 @@ function loadBuoniDaApprovare(){
             card.innerHTML = `
                 <div class="card-body" id="buono-${buono.id}">
                     <h5 class="card-title">Buono #${buono.id}</h5>
-                    <p class="card-text">Descrizione: ${buono.polizza.fornitore.nome || ''} - ${buono.polizza.merce.tipologia_merce}</p>
-                    <p class="card-text">Peso totale: ${buono.polizza.peso || ''}</p>
+                    <p class="card-text">Descrizione polizza: ${buono.polizza.fornitore.nome || ''} - ${buono.polizza.merce.tipologia_merce}</p>
+                    <p class="card-text">Peso totale polizza: ${buono.polizza.peso || ''}</p>
                     <p class="card-text">Peso richiesto: ${buono.peso || ''}</p>
                     <p class="card-text">Cliente: ${buono.id_cliente || ''}</p>
                     <button class="btn btn-success" onclick="approvaBuono(true, ${buono.id})">Approva</button>

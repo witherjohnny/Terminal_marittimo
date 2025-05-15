@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cao.terminal_marittimo.UsersKeySingleton;
+import com.cao.terminal_marittimo.Dao.AutistaDao;
+import com.cao.terminal_marittimo.Dao.BuonoDao;
 import com.cao.terminal_marittimo.Dao.ClienteDao;
 import com.cao.terminal_marittimo.Dao.PolizzaDao;
 import com.cao.terminal_marittimo.Dao.UtenteDao;
+import com.cao.terminal_marittimo.Models.Autista;
+import com.cao.terminal_marittimo.Models.Buono_consegna;
 import com.cao.terminal_marittimo.Models.Polizza;
 
 @RestController
@@ -22,6 +26,8 @@ public class ClienteController {
     ClienteDao daoCLiente = new ClienteDao();
     UtenteDao daoUtente = new UtenteDao();  
     PolizzaDao daoPolizza = new PolizzaDao();
+    BuonoDao daoBuono = new BuonoDao();
+    AutistaDao daoAutista = new AutistaDao();
 
     @GetMapping("/getAllPolizze")
     public List<Polizza> getAllPolizze(@RequestParam(name = "token" ,required=true) String token) {
@@ -42,7 +48,53 @@ public class ClienteController {
         if(id_cliente == -1){
             return ResponseEntity.status(500).body(Map.of("error", "Cliente non trovato"));
         }
-        daoCLiente.richiediBuono(polizza, peso, id_cliente);
+        daoBuono.richiediBuono(polizza, peso, id_cliente);
         return ResponseEntity.ok(Map.of("message", "Richiesta inviata con successo"));
+    }
+    @GetMapping("/getBuoni")
+    public List<Buono_consegna> getBuoni(@RequestParam(name = "token" ,required=true) String token) {
+        if(UsersKeySingleton.getInstance().checkAuthorization(token).equals("cliente") == false){
+            return List.of();
+        }
+        int id_utente = UsersKeySingleton.getUserIdFromToken(token);
+        int id_cliente = daoUtente.getClienteId(id_utente);
+        if(id_cliente == -1){
+            return List.of();
+        }
+        return daoBuono.getBuoni(id_cliente);
+    }
+    @GetMapping("/getAutisti")
+    public List<Autista> getAutisti(@RequestParam(name = "token" ,required=true) String token) {
+        if(UsersKeySingleton.getInstance().checkAuthorization(token).equals("cliente") == false){
+            return List.of();
+        }
+        int id_utente = UsersKeySingleton.getUserIdFromToken(token);
+        int id_cliente = daoUtente.getClienteId(id_utente);
+        if(id_cliente == -1){
+            return List.of();
+        }
+        return daoAutista.getAutisti(id_cliente);
+    }
+    @GetMapping("/registraAutista")
+    public ResponseEntity<Map<String, String>> registraAutista(
+            @RequestParam(name = "token", required = true) String token,
+            @RequestParam(name = "nome", required = true) String nome,
+            @RequestParam(name = "cognome", required = true) String cognome,
+            @RequestParam(name = "username", required = true) String username,
+            @RequestParam(name = "password", required = true) String password) {
+                
+        if (!UsersKeySingleton.getInstance().checkAuthorization(token).equals("cliente")) {
+            return ResponseEntity.status(401).body(Map.of("error", "Unauthorized"));
+        }
+        int id_utente = UsersKeySingleton.getUserIdFromToken(token);
+        int id_cliente = daoUtente.getClienteId(id_utente);
+        if (id_cliente == -1) {
+            return ResponseEntity.status(404).body(Map.of("error", "Cliente non trovato"));
+        }
+        boolean success = daoAutista.registraAutista(nome, cognome, username, password, id_cliente);
+        if (!success) {
+            return ResponseEntity.status(400).body(Map.of("error", "Registrazione autista fallita"));
+        }
+        return ResponseEntity.ok(Map.of("message", "Autista registrato con successo"));
     }
 }

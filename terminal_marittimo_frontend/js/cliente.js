@@ -52,4 +52,31 @@ function richiediBuono(event){
         
         console.log('Error: ' + error.message);
     });
+
+    
+}
+function registraAutista(event){
+    event.preventDefault();
+    const nome = document.getElementById('nome').value;
+    const cognome = document.getElementById('cognome').value;
+    const username = document.getElementById('username').value;
+    const password = CryptoJS.MD5(document.getElementById('password').value);
+
+    if (!nome || !cognome || !username || !password) {
+        alert('Compila tutti i campi.');
+        return;
+    }
+    fetch(`http://localhost:8080/cliente/registraAutista?token=${encodeURIComponent(localStorage.getItem('authToken'))}&nome=${encodeURIComponent(nome)}&cognome=${encodeURIComponent(cognome)}&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`, {
+        method: 'GET',
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Errore nella registrazione dell\'autista');
+        }
+        return response.json();
+    }).then(data => {
+        console.log(data);
+        alert('Autista registrato con successo');
+    }).catch(error => {
+        console.log('Error: ' + error.message);
+    });
 }
