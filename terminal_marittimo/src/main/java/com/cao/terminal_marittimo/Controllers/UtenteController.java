@@ -51,7 +51,10 @@ public class UtenteController {
         
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping("/test")
+    public String test(@RequestParam(name = "token") String token) {
+        return "hello "+token;  
+    }
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> register(@RequestParam(name = "username" ,required = true) String nome, @RequestParam(name = "password" ,required = true) String password) {
         if(dao.registra(nome, password)){

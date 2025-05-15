@@ -2,12 +2,12 @@ package com.cao.terminal_marittimo.Models;
 
 public class Porto {
     private int id;
-    private Porto porto;
+    private String nome;
     private String nazionalita;
 
-    public Porto(int id, Porto porto, String nazionalita) {
+    public Porto(int id, String nome, String nazionalita) {
         this.id = id;
-        this.porto = porto;
+        this.nome = nome;
         this.nazionalita = nazionalita;
     }
 
@@ -15,8 +15,8 @@ public class Porto {
         return this.id;
     }
 
-    public Porto getPorto() {
-        return this.porto;
+    public String getNome() {
+        return this.nome;
     }
 
     public String getNazionalita() {
