@@ -206,6 +206,21 @@ function registraPolizza(event) {
         return;
     }
 
+    if (isNaN(peso) || peso <= 0) {
+        alert('Il peso deve essere un numero positivo.');
+        return;
+    }
+
+    if (isNaN(durataFranchigia) || durataFranchigia <= 0) {
+        alert('La durata della franchigia deve essere un numero positivo.');
+        return;
+    }
+
+    if (isNaN(costoFranchigia) || costoFranchigia < 0) {
+        alert('Il costo della franchigia deve essere un numero maggiore o uguale a zero.');
+        return;
+    }
+
     // Costruisce l'URL con i parametri
     const url = `http://localhost:8080/admin/registraPolizza?token=${encodeURIComponent(localStorage.getItem('authToken'))}&viaggio=${encodeURIComponent(viaggio)}&fornitore=${encodeURIComponent(fornitore)}&peso=${encodeURIComponent(peso)}&merce=${encodeURIComponent(merce)}&durata_franchigia=${encodeURIComponent(durataFranchigia)}&costo_franchigia=${encodeURIComponent(costoFranchigia)}`;
 
