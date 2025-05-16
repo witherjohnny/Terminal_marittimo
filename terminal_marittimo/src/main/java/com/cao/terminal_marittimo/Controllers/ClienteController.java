@@ -97,4 +97,20 @@ public class ClienteController {
         }
         return ResponseEntity.ok(Map.of("message", "Autista registrato con successo"));
     }
+
+    @GetMapping("/assegnaBuono")
+    public ResponseEntity<Map<String, String>> assegnaBuono(@RequestParam(name = "token", required = true) String token,
+                                            @RequestParam(name = "id", required = true) int id_buono,
+                                            @RequestParam(name = "id_autista", required = true) int id_autista) {
+        if (UsersKeySingleton.getInstance().checkAuthorization(token).equals("cliente") == false) {
+            return ResponseEntity.status(403).body(Map.of("error", "Unauthorized"));
+        }
+
+        boolean success = daoBuono.assegnaBuono(id_buono, id_autista);
+        if(success){
+            return ResponseEntity.ok(Map.of("message","buono assegnato"));
+        }
+
+        return ResponseEntity.status(500).body(Map.of("error", "Errore durante l'operazione sul buono"));
+    }
 }

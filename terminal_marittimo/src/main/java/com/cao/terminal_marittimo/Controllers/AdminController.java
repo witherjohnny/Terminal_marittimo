@@ -15,12 +15,14 @@ import com.cao.terminal_marittimo.Dao.MerceDao;
 import com.cao.terminal_marittimo.Dao.NaveDao;
 import com.cao.terminal_marittimo.Dao.PolizzaDao;
 import com.cao.terminal_marittimo.Dao.PortoDao;
+import com.cao.terminal_marittimo.Dao.RitiroDao;
 import com.cao.terminal_marittimo.Dao.ViaggioDao;
 import com.cao.terminal_marittimo.Models.Buono_consegna;
 import com.cao.terminal_marittimo.Models.Fornitore;
 import com.cao.terminal_marittimo.Models.Merce;
 import com.cao.terminal_marittimo.Models.Nave;
 import com.cao.terminal_marittimo.Models.Porto;
+import com.cao.terminal_marittimo.Models.Ritiro;
 import com.cao.terminal_marittimo.Models.Viaggio;
 
 
@@ -38,6 +40,7 @@ public class AdminController {
     private final MerceDao daoMerce = new MerceDao();
     private final PolizzaDao daoPolizza = new PolizzaDao();
     private final BuonoDao daoBuono = new BuonoDao();
+    private final RitiroDao daoRitiro = new RitiroDao();
      //http://localhost:8080/admin/getAllNavi
     @GetMapping("/getAllNavi")
     public List<Nave> getAllNavi(@RequestParam(name = "token" ,required=true) String token) {
@@ -156,5 +159,35 @@ public class AdminController {
             }
         }
         return ResponseEntity.status(500).body(Map.of("error", "Errore durante l'operazione sul buono"));
+    }
+
+    @GetMapping("/getAllNotApprovedRitiri")
+    public List<Ritiro> getAllNotApprovedRitiri(@RequestParam(name = "token", required = true) String token){
+        if (UsersKeySingleton.getInstance().checkAuthorization(token).equals("admin") == false) {
+            return List.of();
+        }
+        return daoRitiro.getAllNotApprovedRitiri();
+    }
+    @GetMapping("/approvaRitiro")
+    public ResponseEntity<Map<String, String>> approvaRitiro(@RequestParam(name = "token", required = true) String token,
+                                            @RequestParam(name = "approva", required = true) boolean approva,
+                                            @RequestParam(name = "id", required = true) int id){
+        if (UsersKeySingleton.getInstance().checkAuthorization(token).equals("admin") == false) {
+            return ResponseEntity.status(403).body(Map.of("error", "Unauthorized"));
+        }
+
+        if (approva) {
+            boolean success = daoRitiro.approvaRitiro(id);
+            if(success){
+                return ResponseEntity.ok(Map.of("message","ritiro approvato"));
+            }
+            
+        } else {
+            boolean success = daoRitiro.deleteRitiro(id);
+            if(success){
+                return ResponseEntity.ok(Map.of("message","ritiro cancellato"));
+            }
+        }
+        return ResponseEntity.status(500).body(Map.of("error", "Errore durante l'operazione sul ritiro"));
     }
 }

@@ -1,44 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
-    <script src="../js/authenticate.js"></script>
-    <script src="../js/cliente.js"></script>
-    <script src="../js/clienteBuoni.js"></script>
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <script src="../js/bootstrap.js"></script>
-    
-</head>
-<body onload="Load(); auth(); loadBuoni()">
-    <h1>richiedi buono</h1>
-    <form onsubmit="richiediBuono(event)">
-        <label for="polizza">Polizza:</label>
-        <select name="polizza" id="polizza"></select>
-        <label for="peso">Peso:</label>
-        <input type="number" id="peso" name="peso" required>
-        <button type="submit">Richiedi</button>
-    </form>
-    <h1>registra autista</h1>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richiesta Buono</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../css/bootstrap.css">
 
-    <form onsubmit="registraAutista(event)">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
-        <label for="cognome">Cognome:</label>
-        <input type="text" id="cognome" name="cognome" required>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Registra</button>
+  <!-- Script esterni -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+  <script src="../js/authenticate.js"></script>
+  <script src="../js/cliente.js"></script>
+  <script src="../js/clienteBuoni.js"></script>
+  <script src="../js/bootstrap.js"></script>
+</head>
+
+<body onload="Load(); auth(); loadBuoni()">
+
+  <div class="container mt-4">
+
+    <h1 class="mb-4">Richiedi Buono</h1>
+    <form onsubmit="richiediBuono(event)" class="mb-5">
+      <div class="mb-3">
+        <label for="polizza" class="form-label">Polizza:</label>
+        <select name="polizza" id="polizza" class="form-select"></select>
+      </div>
+      <div class="mb-3">
+        <label for="peso" class="form-label">Peso:</label>
+        <input type="number" id="peso" name="peso" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Richiedi</button>
     </form>
-    <h1>assegna buono</h1><!--assegna il buono ad un autista-->
-    <div onload="loadBuoni()" id="buoni-container">
-        
+
+    <h1 class="mb-4">Registra Autista</h1>
+    <form onsubmit="registraAutista(event)" class="mb-5">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="nome" class="form-label">Nome:</label>
+          <input type="text" id="nome" name="nome" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label for="cognome" class="form-label">Cognome:</label>
+          <input type="text" id="cognome" name="cognome" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label for="username" class="form-label">Username:</label>
+          <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success mt-3">Registra</button>
+    </form>
+
+    <h1 class="mb-4">Assegna Buono</h1>
+    <div id="buoni-container" class="border p-3 rounded bg-light">
+      <!-- Caricamento dinamico -->
     </div>
-        
+
+  </div>
+  
 </body>
 </html>

@@ -64,10 +64,23 @@ function loadBuoni() {
     });
 }
 function assegnaBuono(buonoId) {
-    fetch(`http://localhost:8080/admin/assegnaBuono?token=${encodeURIComponent(localStorage.getItem('authToken'))}&id=${buonoId}`, {
+    const card = document.getElementById(`buono-${buonoId}`);
+    const select = card.querySelector('select[name="autisti"]');
+    const autistaId = select ? select.value : null;
+    if (!autistaId) {
+        alert('Seleziona un autista prima di assegnare il buono.');
+        return;
+    }
+
+    fetch(`http://localhost:8080/cliente/assegnaBuono?token=${encodeURIComponent(localStorage.getItem('authToken'))}&id=${buonoId}&id_autista=${autistaId}`, {
         method: 'GET',
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Errore nella richiesta di assegnazione del buono');
+        }
+        return response.json();
+    })
     .then(data => {
         console.log('Success:', data);
         // Rimuovi la card del buono assegnato dal DOM

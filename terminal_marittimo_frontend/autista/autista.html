@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="../js/autista.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buoni Assegnati</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../css/bootstrap.css">
+
+  <!-- Script -->
+  <script src="../js/autista.js"></script>
+  <script src="../js/bootstrap.js"></script>
 </head>
-<body>
-    <h1>Gestione Autisti</h1>
-    <div id="autisti-container"></div>
-    
+
+<body onload="getAssignedBuoni()">
+
+  <div class="container mt-4">
+    <h1 class="mb-4">Buoni Assegnati</h1>
+
+    <div id="autisti-container" class="border rounded p-3 bg-light">
+      <!-- I buoni verranno caricati qui -->
+    </div>
+  </div>
+
 </body>
 </html>

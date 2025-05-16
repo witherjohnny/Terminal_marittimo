@@ -80,4 +80,19 @@ public class UtenteDao {
         }
         return -1;
     }
+    public int getAutistaId(int id) {
+        try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
+            String sql = "SELECT a.id FROM utenti AS u JOIN autista AS a ON u.id = a.id_utente WHERE u.ruolo = 'autista' AND a.id_utente = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return -1;
+    }
 }

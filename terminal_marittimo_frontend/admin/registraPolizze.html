@@ -1,36 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="../js/authenticate.js"></script>
-    <script src="../js/admin.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registra Polizze</title>
+
+  <!-- CSS e JS -->
+  <link rel="stylesheet" href="../css/bootstrap.css" />
+  <script src="../js/bootstrap.js"></script>
+  <script src="../js/authenticate.js"></script>
+  <script src="../js/admin.js"></script>
 </head>
-<body onload="LoadRegistraPolizze(); auth()">
-    <!--registra le polizze del viaggio-->
-    <h1>Registra polizze</h1>
-    <form onsubmit="registraPolizza(event)">
 
-        <h3>Fornitore</h3>
-        <label for="fornitore">Nome:</label>
-        <select name="fornitore" id="fornitore"></select>
+<body onload="LoadRegistraPolizze(); auth();">
+  <div class="container mt-4">
 
-        <h3>Altri Dati</h3>
-        <label for="peso">Peso:</label>
-        <input type="number" id="peso" name="peso" step="0.01" required><br>
-        
-        <label for="merce">Merce:</label>
-        <select name="merce" id="merce"></select><br>
-        
-        <label for="durata_franchigia">Durata Franchigia (giorni):</label>
-        <input type="number" id="durata_franchigia" name="durata_franchigia" required><br>
-        
-        <label for="costo_franchigia">Costo Franchigia:</label>
-        <input type="number" id="costo_franchigia" name="costo_franchigia" step="0.01" required><br>    
-        
-        <button type="submit">Registra</button>
+    <h1 class="mb-4">Registra Polizze</h1>
+
+    <form onsubmit="registraPolizza(event)" class="border p-4 rounded bg-light mb-4">
+      <h4 class="mb-3">Fornitore</h4>
+      <div class="mb-3">
+        <label for="fornitore" class="form-label">Nome:</label>
+        <select name="fornitore" id="fornitore" class="form-select"></select>
+      </div>
+
+      <h4 class="mb-3">Altri Dati</h4>
+
+      <div class="mb-3">
+        <label for="peso" class="form-label">Peso:</label>
+        <input type="number" id="peso" name="peso" step="0.01" class="form-control" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="merce" class="form-label">Merce:</label>
+        <select name="merce" id="merce" class="form-select"></select>
+      </div>
+
+      <div class="mb-3">
+        <label for="durata_franchigia" class="form-label">Durata Franchigia (giorni):</label>
+        <input type="number" id="durata_franchigia" name="durata_franchigia" class="form-control" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="costo_franchigia" class="form-label">Costo Franchigia:</label>
+        <input type="number" id="costo_franchigia" name="costo_franchigia" step="0.01" class="form-control" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Registra</button>
     </form>
-    <a href="../index.html"><button>Torna home</button></a>
+
+    <a href="../index.html" class="btn btn-secondary">Torna Home</a>
+
+  </div>
 </body>
 </html>

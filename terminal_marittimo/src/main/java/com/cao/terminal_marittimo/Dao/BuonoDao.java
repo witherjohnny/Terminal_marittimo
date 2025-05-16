@@ -118,7 +118,7 @@ public class BuonoDao {
     public List<Buono_consegna> getBuoni(int id_cliente) {
         try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
             List<Buono_consegna> buoni = new ArrayList<>();
-            String sql = "SELECT * FROM buono_consegna AS b JOIN polizza AS p ON b.id_polizza = p.id JOIN viaggio as v ON p.id_viaggio = v.id JOIN merce as m ON p.id_merce = m.id JOIN fornitore as f ON p.id_fornitore = f.id WHERE b.approvato = 1 AND b.id_cliente = ?";
+            String sql = "SELECT * FROM buono_consegna AS b JOIN polizza AS p ON b.id_polizza = p.id JOIN viaggio as v ON p.id_viaggio = v.id JOIN merce as m ON p.id_merce = m.id JOIN fornitore as f ON p.id_fornitore = f.id WHERE b.approvato = 1 AND b.id_cliente = ? AND id_autista IS NULL";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id_cliente);
@@ -160,4 +160,63 @@ public class BuonoDao {
         }
         return List.of();
     }
+
+    public boolean assegnaBuono(int id, int id_autista){
+         try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
+            String sql = "UPDATE buono_consegna SET id_autista = ? WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id_autista);
+            stmt.setInt(2, id);
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public List<Buono_consegna> getBuoniAutista(int id_autista) {
+        try (Connection conn = DriverManager.getConnection(DbConnection.URL, DbConnection.USER, DbConnection.PASSWORD)) {
+            List<Buono_consegna> buoni = new ArrayList<>();
+            String sql = "SELECT * FROM buono_consegna AS b JOIN polizza AS p ON b.id_polizza = p.id JOIN viaggio as v ON p.id_viaggio = v.id JOIN merce as m ON p.id_merce = m.id JOIN fornitore as f ON p.id_fornitore = f.id WHERE b.approvato = 1 AND b.id_autista = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id_autista);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Buono_consegna buono = new Buono_consegna(
+                    rs.getInt("id"),
+                    rs.getFloat("peso"),
+                    rs.getInt("id_cliente"),
+                    new Polizza(
+                        rs.getInt("id_polizza"),
+                        new Viaggio(
+                            rs.getInt("id_viaggio"),
+                            rs.getInt("id_nave"),
+                            rs.getDate("data_partenza"),
+                            rs.getInt("id_porto_partenza"),
+                            rs.getInt("id_porto_arrivo"),
+                            rs.getDate("data_allibramento")
+                        ),
+                        new Fornitore(
+                            rs.getInt("id_fornitore"),
+                            rs.getString("nome")
+                        ),
+                        rs.getFloat("peso"),
+                        new Merce(
+                            rs.getInt("id_merce"),
+                            rs.getString("tipologia_merce")
+                        ),
+                        rs.getInt("durata_franchigia"),
+                        rs.getFloat("costo_franchigia")
+                    )
+                );
+                buoni.add(buono);
+            }
+            return buoni;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return List.of();
+    }
+
+    
 }
